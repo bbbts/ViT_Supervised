@@ -304,6 +304,11 @@ Overall metrics:
 
 > This section provides both **overall performance** and **per-class breakdown**, helping analyze strengths and weaknesses of the model on different classes.
 
+### Example Prediction
+Ground Truth (left) vs Predicted Mask (right):
+
+![Flame Prediction](image_1212.jpg)
+
 ---
 
 ## 8️⃣ Repository Structure
