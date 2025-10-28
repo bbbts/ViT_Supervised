@@ -138,18 +138,26 @@ git clone https://github.com/YOUR_USERNAME/segmenter-ade20k-flame.git
 cd segmenter-ade20k-flame
 ```
 
-### Create & Activate Conda Environment
+---
+
+### Option 1: Conda Environment & Requirements
 ```bash
 conda create -n segmenter_env python=3.8 -y
 conda activate segmenter_env
-```
-
-### Install Requirements
-```bash
 pip install -r requirements.txt
 ```
 
+### Option 2: PyTorch + pip install
+1. Install [PyTorch 1.9](https://pytorch.org/) following your system configuration.
+2. At the root of the repository, run:
+```bash
+pip install .
+```
+
+---
+
 ### Dataset Environment Variable
+Define the dataset path:
 ```bash
 export DATASET=/path/to/dataset/dir
 ```
@@ -159,18 +167,22 @@ export DATASET=/path/to/dataset/dir
 python -m segm.scripts.prepare_ade20k $DATASET
 ```
 
+---
+
 ### Logs
-Plot experiment logs using:
+You can visualize experiment logs using:
 ```bash
 python -m segm.utils.logs logs.yml
 ```
-`logs.yml` should specify your checkpoints:
+`logs.yml` should specify your checkpoints, for example:
 ```yaml
 root: /path/to/checkpoints/
 logs:
   seg-t: seg_tiny_mask/log.txt
   seg-b: seg_base_mask/log.txt
 ```
+This will generate plots of training/validation loss and accuracy for easy monitoring.
+
 
 ---
 
