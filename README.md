@@ -289,7 +289,7 @@ segmenter-ade20k-flame/
 | 2020 | *Vision Transformer Code* | Google Research | [GitHub](https://github.com/google-research/vision_transformer) |
 | 2021 | *Segmenter: Transformer for Semantic Segmentation* | Strudel et al. | [arXiv:2105.05633v3](https://arxiv.org/abs/2105.05633v3) |
 | 2021 | *Segmenter Code Repository* | Strudel et al. | [GitHub](https://github.com/rstrudel/segmenter) |
-| 2022 | *FLAME: A Large-Scale Dataset for Fire Segmentation* | IEEE Dataport | [Dataset Link]([https://ieee-dataport.org/open-access/flame-dataset](https://ieee-dataport.org/open-access/flame-dataset-aerial-imagery-pile-burn-detection-using-drones-uavs)) |
+| 2022 | *FLAME: A Large-Scale Dataset for Fire Segmentation* | IEEE Dataport | [Dataset Link](https://ieee-dataport.org/open-access/flame-dataset-aerial-imagery-pile-burn-detection-using-drones-uavs) |
 | 2017 | *ADE20K Scene Parsing Benchmark* | Zhou et al. | [Dataset Link](https://groups.csail.mit.edu/vision/datasets/ADE20K/) |
 
 ---
