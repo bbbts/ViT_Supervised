@@ -2,14 +2,11 @@
 
 ![Figure 1 from paper](./overview.png)
 
-[Segmenter: Transformer for Semantic Segmentation](https://arxiv.org/abs/2105.05633)
-by Robin Strudel*, Ricardo Garcia*, Ivan Laptev and Cordelia Schmid, ICCV 2021.
-
+[Segmenter: Transformer for Semantic Segmentation](https://arxiv.org/abs/2105.05633)  
+by Robin Strudel*, Ricardo Garcia*, Ivan Laptev and Cordelia Schmid, ICCV 2021.  
 *Equal Contribution
 
 🔥 **Segmenter is now available on [MMSegmentation](https://github.com/open-mmlab/mmsegmentation/tree/master/configs/segmenter).**
-
-
 
 # 🌍 Vision Transformer (ViT) for Semantic Segmentation — Supervised Training on Flame & ADE20K
 
@@ -47,7 +44,7 @@ It extends the Segmenter framework to perform semantic segmentation on:
 - **Flame Dataset (Fire Segmentation)** — from IEEE Dataport  
 - **ADE20K Dataset (General Scene Understanding)** — a large-scale semantic segmentation benchmark  
 
-The repository explores **end-to-end supervised training** using ViT backbones (e.g., `vit_tiny`, `vit_small`, `vit_base`) combined with the **Mask Transformer Decoder**.  
+The repository supports **end-to-end supervised training** using ViT backbones (e.g., `vit_tiny`, `vit_small`, `vit_base`) combined with the **Mask Transformer Decoder**.  
 The experiments focus on **pixel-level classification**, comparing Transformer-based segmentation against traditional CNN-based methods.
 
 ---
@@ -56,8 +53,7 @@ The experiments focus on **pixel-level classification**, comparing Transformer-b
 
 ### 🧠 Transformers in Vision
 
-The Transformer architecture, introduced by Vaswani et al. (2017), revolutionized sequence modeling with the **“Attention is All You Need”** paradigm.  
-Initially developed for NLP, it was later extended to vision tasks by partitioning images into patches, treating them as visual tokens.
+The Transformer architecture, introduced by Vaswani et al. (2017), revolutionized sequence modeling with the **“Attention is All You Need”** paradigm. Initially developed for NLP, it was later extended to vision tasks by partitioning images into patches, treating them as visual tokens.
 
 **Paper:** [Attention Is All You Need (2017)](https://arxiv.org/abs/1706.03762)
 
@@ -87,7 +83,7 @@ Instead of a classification head, Segmenter uses a **mask transformer decoder** 
 - Achieves competitive performance on datasets like ADE20K.
 
 **Paper:** [Segmenter: Transformer for Semantic Segmentation (2021)](https://arxiv.org/abs/2105.05633v3)  
-**Official GitHub Repo:** [https://github.com/rstrudel/segmenter](https://github.com/rstrudel/segmenter)
+**Official GitHub Repo:** [Segmenter Repository](https://github.com/rstrudel/segmenter)
 
 ---
 
@@ -142,7 +138,7 @@ git clone https://github.com/YOUR_USERNAME/segmenter-ade20k-flame.git
 cd segmenter-ade20k-flame
 ```
 
-### Create & Activate a Conda Environment
+### Create & Activate Conda Environment
 ```bash
 conda create -n segmenter_env python=3.8 -y
 conda activate segmenter_env
@@ -153,38 +149,22 @@ conda activate segmenter_env
 pip install -r requirements.txt
 ```
 
-### Dataset Path
-Update the dataset path in your training script:
+### Dataset Environment Variable
 ```bash
-DATASET=/path/to/Datasets/Flame
-# or for ADE20K
-DATASET=/path/to/Datasets/ADE20K/ADEChallengeData2016
-```
-
----
-## Installation
-
-Define os environment variables pointing to your checkpoint and dataset directory, put in your `.bashrc`:
-```sh
 export DATASET=/path/to/dataset/dir
 ```
 
-Install [PyTorch 1.9](https://pytorch.org/) then `pip install .` at the root of this repository.
-
-To download ADE20K, use the following command:
-```python
+### ADE20K Preparation
+```bash
 python -m segm.scripts.prepare_ade20k $DATASET
 ```
 
-
-## Logs
-
-To plot the logs of your experiments, you can use
-```python
+### Logs
+Plot experiment logs using:
+```bash
 python -m segm.utils.logs logs.yml
 ```
-
-with `logs.yml` located in `utils/` with the path to your experiments logs:
+`logs.yml` should specify your checkpoints:
 ```yaml
 root: /path/to/checkpoints/
 logs:
@@ -192,11 +172,11 @@ logs:
   seg-b: seg_base_mask/log.txt
 ```
 
-
+---
 
 ## 5️⃣ Training Procedure
 
-Example training command for **Flame**:
+### Flame
 ```bash
 python3 train.py \
   --dataset flame \
@@ -208,7 +188,7 @@ python3 train.py \
   --log-dir ./logs/Flame_ViT_Tiny/
 ```
 
-Example training command for **ADE20K**:
+### ADE20K
 ```bash
 python3 train.py \
   --dataset ade20k \
@@ -220,13 +200,11 @@ python3 train.py \
   --log-dir ./logs/ADE20K_ViT_Small/
 ```
 
-Training logs, validation accuracy, and loss curves will be automatically saved to the `--log-dir` path.
+Logs, validation accuracy, and loss curves are saved to the `--log-dir` path.
 
 ---
 
 ## 6️⃣ Evaluation & Results
-
-To evaluate a trained model:
 ```bash
 python3 eval.py \
   --dataset flame \
@@ -235,30 +213,26 @@ python3 eval.py \
   --resume ./logs/Flame_ViT_Tiny/checkpoint.pth
 ```
 
-During evaluation:
-- Ground truth masks and predicted segmentation maps are saved **side-by-side**.  
-- Metrics like **mIoU**, **Pixel Accuracy**, and **F1-score** are reported.  
-- Visual results (GT vs Prediction) are stored in the output directory.  
+- Saves **ground truth vs predicted masks** side-by-side.  
+- Reports **mIoU, Pixel Accuracy, F1-score**.  
+- Visual results are stored in the output directory.
 
 ---
 
 ## 7️⃣ Inference
 
-After training, you can run inference on any custom image using the trained model.
-
-Example:
 ```bash
 python3 inference.py \
   --image /path/to/custom_image.jpg \
   --checkpoint ./logs/Flame_ViT_Tiny/checkpoint.pth \
   --backbone vit_tiny_patch16_384 \
   --decoder mask_transformer \
-  --output ./inference_results/
+  --output ./inference_results/ \
+  --overlay
 ```
 
-**Output:**  
-- The model will generate a segmentation mask for the input image.  
-- The script saves a visualization showing **input image**, **predicted mask**, and optionally **overlayed output**.  
+- Generates segmentation mask for input image.  
+- Optional `--overlay` shows predicted mask over original image.  
 
 ---
 
@@ -307,15 +281,8 @@ University of Nevada, Las Vegas (UNLV)
 🧠 Vision Transformers & Self-Supervised Learning  
 
 **Acknowledgments:**  
-This work builds on the foundation of the **Segmenter (2021)** implementation by **Robin Strudel et al.**,  
-and extends its supervised framework to domain-specific fire segmentation using the **Flame dataset**, alongside general-purpose **ADE20K** evaluation.
-
----
+- Vision Transformer implementation uses [timm](https://github.com/rwightman/pytorch-image-models)  
+- Semantic segmentation pipeline uses [mmsegmentation](https://github.com/open-mmlab/mmsegmentation)  
+- Builds upon **Segmenter (2021)** by Robin Strudel et al., extending supervised framework to Flame & ADE20K.
 
 > *“Transformers reshaped NLP, ViT extended them to vision, and with Segmenter — we bring them to the realm of dense, pixel-level understanding.”*
-
-
-## Acknowledgements
-
-The Vision Transformer code is based on [timm](https://github.com/rwightman/pytorch-image-models) library and the semantic segmentation training and evaluation pipeline 
-is using [mmsegmentation](https://github.com/open-mmlab/mmsegmentation).
