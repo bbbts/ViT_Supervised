@@ -216,7 +216,11 @@ Logs, validation accuracy, and loss curves are saved to the `--log-dir` path.
 
 ---
 
-## 6️⃣ Evaluation & Results
+## 6️⃣ Evaluation & Training Logs
+
+### Evaluation Command
+To evaluate a trained model on the Flame dataset:
+
 ```bash
 python3 eval.py \
   --dataset flame \
@@ -225,13 +229,40 @@ python3 eval.py \
   --resume ./logs/Flame_ViT_Tiny/checkpoint.pth
 ```
 
-- Saves **ground truth vs predicted masks** side-by-side.  
-- Reports **mIoU, Pixel Accuracy, F1-score**.  
-- Visual results are stored in the output directory.
+### What Happens During Training
+- **Loss Plot:** A single PNG file is updated after each epoch showing:
+  1. Cross-Entropy Loss (CE)  
+  2. Weighted Cross-Entropy Loss  
+  3. Dice Loss  
+  4. Validation Loss  
+  5. Total Loss  
+- **CSV Logging:** A single CSV file is continuously updated after each epoch, containing:
+  - Pixel Accuracy  
+  - Mean Pixel Accuracy  
+  - IoU  
+  - Mean IoU  
+  - FWIoU (Frequency Weighted IoU)  
+  - F1-Score per class (Dice Coefficient)  
+  - Precision, Recall, F1-score per class  
+  - Per-Class IoU  
 
 ---
 
-## 7️⃣ Inference
+### Sample Training Results (Flame Dataset)
+After training from scratch (epoch 49 → 50th epoch):
+
+| epoch | PixelAcc  | MeanAcc  | IoU       | MeanIoU  | FWIoU     | PerClassDice           | Precision             | Recall               | F1                 | PerClassIoU       |
+|-------|-----------|----------|-----------|----------|-----------|-----------------------|----------------------|--------------------|------------------|-----------------|
+| 49    | 0.99750315 | 0.8911435 | 0.99750315 | 0.8089493 | 0.99750315 | [0.9987422, 0.7590002] | [0.9989082, 0.75019044] | [0.9985762, 0.7837108] | [255.678, 196.2456] | [0.9974881, 0.6204105] |
+
+> The loss plot and CSV allow monitoring training progress and class-specific performance trends.
+
+---
+
+## 7️⃣ Inference & Metrics Logging
+
+### Inference Command
+Run inference on custom images:
 
 ```bash
 python3 inference.py \
@@ -243,8 +274,35 @@ python3 inference.py \
   --overlay
 ```
 
-- Generates segmentation mask for input image.  
-- Optional `--overlay` shows predicted mask over original image.  
+### What Happens During Inference
+- **Segmentation Output:** Generates a predicted mask for each input image.  
+- **Optional Overlay:** `--overlay` will show predicted mask over the original image.  
+- **CSV Logging:** Saves evaluation metrics per image, including:
+  - Pixel Accuracy  
+  - Mean Pixel Accuracy  
+  - Mean IoU  
+  - FWIoU  
+  - Dice / F1-Score  
+  - Per-Class Dice, Precision, Recall, F1-Score  
+
+---
+
+### Sample Inference Results (Flame Dataset)
+
+Overall metrics:
+
+| Pixel_Acc | Mean_Acc | Mean_IoU | FWIoU    | Dice      | PerClassDice                     | Precision  | Recall     | F1       |
+|-----------|----------|----------|----------|-----------|----------------------------------|-----------|-----------|----------|
+| 0.99707586 | 0.7777249 | 0.7643642 | 0.9942861 | 0.8463800 | [0.99853091, 0.69422915]       | 0.9610185 | 0.7777249 | 0.8463800 |
+
+**Per-Class Metrics:**
+
+| ID | Name       | Acc    | IoU    | Dice   | Precision | Recall  | F1     |
+|----|------------|--------|--------|--------|-----------|---------|--------|
+| 0  | background | 0.9997 | 0.9971 | 0.9985 | 0.9973    | 0.9997  | 0.9985 |
+| 1  | fire       | 0.5557 | 0.5317 | 0.6942 | 0.9247    | 0.5557  | 0.6942 |
+
+> This section provides both **overall performance** and **per-class breakdown**, helping analyze strengths and weaknesses of the model on different classes.
 
 ---
 
