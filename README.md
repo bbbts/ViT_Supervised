@@ -109,10 +109,9 @@ Datasets/Flame/
           └── validation/ (.png masks)
 ```
 
-Each `.jpg` image has a corresponding `.png` mask representing different fire-related classes.
+Each `.jpg` image has a corresponding `.png` mask representing different fire-related classes.  
 You can download the Flame dataset from IEEE Dataport:  
-🔗 [Flame Dataset]([https://groups.csail.mit.edu/vision/datasets/ADE20K/](https://ieee-dataport.org/open-access/flame-dataset-aerial-imagery-pile-burn-detection-using-drones-uavs))
-
+🔗 [Flame Dataset](https://ieee-dataport.org/open-access/flame-dataset-aerial-imagery-pile-burn-detection-using-drones-uavs)
 ---
 
 ### 🏙️ ADE20K Dataset
