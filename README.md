@@ -9,37 +9,7 @@ by Robin Strudel*, Ricardo Garcia*, Ivan Laptev and Cordelia Schmid, ICCV 2021.
 
 🔥 **Segmenter is now available on [MMSegmentation](https://github.com/open-mmlab/mmsegmentation/tree/master/configs/segmenter).**
 
-## Installation
 
-Define os environment variables pointing to your checkpoint and dataset directory, put in your `.bashrc`:
-```sh
-export DATASET=/path/to/dataset/dir
-```
-
-Install [PyTorch 1.9](https://pytorch.org/) then `pip install .` at the root of this repository.
-
-To download ADE20K, use the following command:
-```python
-python -m segm.scripts.prepare_ade20k $DATASET
-```
-
-
-
-
-## Logs
-
-To plot the logs of your experiments, you can use
-```python
-python -m segm.utils.logs logs.yml
-```
-
-with `logs.yml` located in `utils/` with the path to your experiments logs:
-```yaml
-root: /path/to/checkpoints/
-logs:
-  seg-t: seg_tiny_mask/log.txt
-  seg-b: seg_base_mask/log.txt
-```
 
 # 🌍 Vision Transformer (ViT) for Semantic Segmentation — Supervised Training on Flame & ADE20K
 
@@ -190,6 +160,37 @@ DATASET=/path/to/Datasets/ADE20K/ADEChallengeData2016
 ```
 
 ---
+## Installation
+
+Define os environment variables pointing to your checkpoint and dataset directory, put in your `.bashrc`:
+```sh
+export DATASET=/path/to/dataset/dir
+```
+
+Install [PyTorch 1.9](https://pytorch.org/) then `pip install .` at the root of this repository.
+
+To download ADE20K, use the following command:
+```python
+python -m segm.scripts.prepare_ade20k $DATASET
+```
+
+
+## Logs
+
+To plot the logs of your experiments, you can use
+```python
+python -m segm.utils.logs logs.yml
+```
+
+with `logs.yml` located in `utils/` with the path to your experiments logs:
+```yaml
+root: /path/to/checkpoints/
+logs:
+  seg-t: seg_tiny_mask/log.txt
+  seg-b: seg_base_mask/log.txt
+```
+
+
 
 ## 5️⃣ Training Procedure
 
